@@ -13,8 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppComponent  implements OnInit{
 
   private authService = inject(AuthService)
-  private router = inject(Router)
-  private cookieService = inject(CookieService)
+
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
@@ -27,25 +26,5 @@ export class AppComponent  implements OnInit{
       return true
     }
     return false
-  })
-
-  public authStatusChangedEffect = effect( ()=> {
-    
-    console.log('cambia')
-    switch( this.authService.authStatus()){
-      
-      case AuthStatus.checking:
-        return;
-      
-      case AuthStatus.authenticated:
-        this.router.navigateByUrl(
-          this.cookieService.get('url'))
-          break;
-
-      case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/auth/login')
-        break;
-    };
-
   })
 }
