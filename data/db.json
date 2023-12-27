@@ -1,0 +1,63 @@
+{
+    "users": [
+      {
+        "id": 0,
+        "user": "valentiaga",
+        "name": "Valentina Reale",
+        "email": "valenreale123@gmail.com"
+      },
+      {
+        "id": 1,
+        "user": "lunalauti",
+        "name": "Lautaro Luna",
+        "email": "lauluna817@gmail.com"
+      }
+    ],
+    "items": [
+      {
+        "id": 0,
+        "name": "Apple",
+        "category": "Fruit"
+      },
+      {
+        "id": 1,
+        "name": "Banana",
+        "category": "Fruit"
+      },
+      {
+        "id": 2,
+        "name": "Pear",
+        "category": "Fruit"
+      },
+      {
+        "id": 3,
+        "name": "Eggs",
+        "category": "Protein"
+      },
+      {
+        "id": 4,
+        "name": "Chickpeas",
+        "category": "Protein"
+      },
+      {
+        "id": 5,
+        "name": "Milk",
+        "category": "Dairy"
+      },
+      {
+        "id": 6,
+        "name": "Bleach",
+        "category": "Cleaning"
+      },
+      {
+        "id": 7,
+        "name": "Rice",
+        "category": "Cereal"
+      },
+      {
+        "id": 8,
+        "name": "Flour",
+        "category": "Cereal"
+      }
+    ]
+  }

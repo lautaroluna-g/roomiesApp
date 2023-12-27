@@ -1,0 +1,42 @@
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { MessageService } from 'primeng/api';
+
+@Component({
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styles: ``
+})
+export class LoginPageComponent {
+
+  constructor(private messageService: MessageService) {}
+
+  private fb = inject( FormBuilder )
+
+  private authService = inject(AuthService)
+
+  public loginForm: FormGroup = this.fb.group({
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  })
+
+  show(msg: string, severity:'success'|'info'|'error'): void {
+    this.messageService.add(
+      { severity: severity, 
+        summary: 'Login',
+      detail: msg });
+}
+
+  login(){
+    const {username, password} = this.loginForm.value
+
+    this.authService.login(username,password)
+      .subscribe({
+        next: () => this.show('Logueado!','success'),
+        error: () => {
+          this.show('Error al iniciar sesion','error')
+        }
+      })
+  }
+}

@@ -1,0 +1,30 @@
+<p-toast></p-toast>
+<form [formGroup]="loginForm"
+    (ngSubmit) = "login()">
+    <div class="surface-card p-4 shadow-2 border-round w-6 m-auto">
+            <h1 class="text text-center">Login</h1>
+            <span class="p-input-icon-left w-full">
+                <i class="pi pi-user"></i>
+                <input id="user" type="text" 
+                    placeholder="Username" 
+                    pInputText class="w-full"
+                    formControlName="username">
+            </span>
+            
+            <span class="p-input-icon-left mt-3 w-full">
+                <i class="pi pi-lock"></i>
+                <input id="pass" type="text" 
+                    formControlName="password"
+                    placeholder="Password" 
+                    pInputText class="w-full">
+            </span>
+
+            <button pButton pRipple label="Sign in" 
+                [disabled]="loginForm.invalid"
+                class="w-full mt-3"></button>
+            <hr>
+            <button pButton label="Sign up" 
+                class="w-full mt-3 p-button-secondary"
+                routerLink="/auth/new-account"></button>
+    </div>
+</form>

@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+<form  [formGroup]="registerForm"
+        (ngSubmit) = "register()">
+    <div class="surface-card p-4 shadow-2 border-round w-6 m-auto text-center">
+        <h1 class="text text-center">Create account</h1>
+        <span class="p-input-icon-left w-full">
+            <i class="pi pi-at"></i>
+            <input id="user" type="text" 
+                placeholder="Username" 
+                pInputText class="w-full"
+                formControlName="username">
+        </span>
+
+        <span class="p-input-icon-left mt-3 w-full">
+            <i class="pi pi-user"></i> 
+            <input id="name" type="text" 
+                placeholder="Name" 
+                pInputText class="w-full"
+                formControlName="name">
+        </span>
+
+        <span class="p-input-icon-left mt-3 w-full">
+            <i class="pi pi-envelope"></i> 
+            <input id="name" type="text" 
+                placeholder="Email" 
+                pInputText class="w-full"
+                formControlName="email">
+        </span>
+
+        <span class="p-input-icon-left mt-3 w-full">
+            <i class="pi pi-lock"></i>
+            <input id="pass" type="text" 
+                placeholder="Password" 
+                pInputText class="w-full"
+                formControlName="password">
+        </span>
+
+        <button pButton pRipple label="Sign up" 
+            [disabled]="registerForm.invalid"
+            class="w-full mt-3"
+            ></button>
+        <hr>
+        <a routerLink="/auth/login">I already have an account!</a>
+    </div>
+</form>
