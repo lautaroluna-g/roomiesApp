@@ -4,6 +4,7 @@ import { Error404PageComponent } from './shared/pages/error404-page/error404-pag
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
 import { HomePageComponent } from './shared/pages/home-page/home-page.component';
+import { AboutPageComponent } from './shared/pages/about-page/about-page.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
     path:'item',
     canActivate: [ isAuthenticatedGuard ],
     loadChildren: () => import('./item/item.module').then(m => m.ItemModule),
+  },
+  {
+    path:'about',
+    component: AboutPageComponent,
   },
   {
     path:'404',

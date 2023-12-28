@@ -17,7 +17,7 @@ export class ListPageComponent implements OnInit{
   ngOnInit(): void {
     // this.itemService.getItems()
     // .subscribe(items => this.items = items)
-    this.headerService.setTitle('Lists', 'pi pi-list');
+    this.headerService.setTitle('Lists', 'pi pi-th-large');
     }
 }
 

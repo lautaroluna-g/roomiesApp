@@ -1,8 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { AuthService } from '../../../auth/services/auth.service';
-import { User } from '../../../auth/interfaces';
-import { BehaviorSubject, tap } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +13,10 @@ export class HeaderComponent implements OnInit {
   public title = '';
   public icon = " "
   public actualUser = null
+  public isHome:boolean = false
   
   private headerService = inject(HeaderService)
+  private cdr= inject(ChangeDetectorRef)
 
   private authService = inject(AuthService)
   
@@ -25,8 +26,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.headerService.title.subscribe(({title,icon}) => {
+      this.isHome = title ==='Home'
       this.title = title;
       this.icon = icon
+      this.cdr.detectChanges()
     });
 
     this.headerService.actualUser

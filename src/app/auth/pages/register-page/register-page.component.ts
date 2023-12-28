@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { HeaderService } from '../../../shared/services/header.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -16,6 +17,7 @@ export class RegisterPageComponent implements OnInit {
     private headerService: HeaderService) {}
 
   private fb = inject( FormBuilder )
+  private router= inject(Router)
 
   private authService = inject(AuthService)
 
@@ -38,7 +40,10 @@ export class RegisterPageComponent implements OnInit {
 
     this.authService.register(username,password, email, name)
       .subscribe({
-        next: () => this.show('Usuario registrado','success'),
+        next: () => {
+          this.show('Usuario registrado','success')
+          this.router.navigateByUrl('/home')
+        },
         error: (error) => {
           this.show('Error al registrar el usuario','error')
         }
