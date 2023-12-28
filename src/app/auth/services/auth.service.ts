@@ -4,8 +4,9 @@ import { User } from '../interfaces/user.interface';
 import { environments } from '../../environments/envionments';
 import { AuthStatus } from '../interfaces/auth-status.interface';
 import { CheckTokenResponse, LoginResponse, RegisterResponse } from '../interfaces';
-import { tap, map, Observable, catchError, throwError, of } from 'rxjs';
+import {  map, Observable, catchError, throwError, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { HeaderService } from '../../shared/services/header.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -13,6 +14,7 @@ export class AuthService {
   private readonly baseUrl: string = environments.baseURL
   private httpClient = inject(HttpClient)
   private cookieService = inject(CookieService)
+  private headerService = inject(HeaderService)
 
   private _currentUser = signal<User|null>(null)
   private _authStatus = signal<AuthStatus>(AuthStatus.checking)
@@ -30,7 +32,7 @@ export class AuthService {
 
     this._currentUser.set(user)
     this._authStatus.set(AuthStatus.authenticated)
-    localStorage.setItem('token', token)
+    this.headerService.setUser(user)
     this.cookieService.set('token',token, { secure:true})
     return true
   }
@@ -90,10 +92,8 @@ export class AuthService {
   logout(){
     this.cookieService.deleteAll()
     this._currentUser.set(null)
+    this.headerService.setUser(null)
     this._authStatus.set(AuthStatus.notAuthenticated)
   }
 
-  
-  
-  
 }

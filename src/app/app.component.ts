@@ -2,8 +2,6 @@ import { Component, OnInit, computed, effect, inject} from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
