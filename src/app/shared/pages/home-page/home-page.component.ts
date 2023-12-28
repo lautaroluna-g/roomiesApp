@@ -10,8 +10,7 @@ export class HomePageComponent implements OnInit {
   constructor(private headerService: HeaderService) {}
 
   ngOnInit() {
-    this.headerService.setTitle('Home');
+    this.headerService.setTitle('Home', 'pi pi-home');
   }
-
 
 }

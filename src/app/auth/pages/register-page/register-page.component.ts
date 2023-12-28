@@ -1,17 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { HeaderService } from '../../../shared/services/header.service';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styles: ``
 })
-export class RegisterPageComponent {
+export class RegisterPageComponent implements OnInit {
   
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService,
+    private headerService: HeaderService) {}
 
   private fb = inject( FormBuilder )
 
@@ -41,5 +43,9 @@ export class RegisterPageComponent {
           this.show('Error al registrar el usuario','error')
         }
       })
+  }
+
+  ngOnInit(): void {
+    this.headerService.setTitle('New Account', 'pi pi-user-plus')
   }
 }

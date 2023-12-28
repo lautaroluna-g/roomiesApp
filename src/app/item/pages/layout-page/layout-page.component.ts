@@ -17,11 +17,6 @@ export class LayoutPageComponent{
 
   public actualUser = this.authService.currentUser()?.username
 
-
-  public onLogout(){
-    this.authService.logout()
-  }
-
   public authStatusChangedEffect = effect( ()=> {
 
     switch( this.authService.authStatus()){

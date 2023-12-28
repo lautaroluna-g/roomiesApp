@@ -2,20 +2,21 @@
     <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
       <div>
         <div class="mr-5 flex align-items-center mt-3">
-          <i class="pi pi-list mr-2 item-size-200"
+          <i class="mr-2 item-size-200"
+            [class]="icon"
             style="font-size: 2.5rem; color: slateblue"></i>
           <div class="font-bold text-5xl text-900">{{title}}</div>
         </div>
       </div>
   
-      <div *ngIf="actualUser;else notAuthenticated"
+      <div *ngIf="actualUser;"
         class="flex mt-3 lg:mt-0">
         <h3>Welcome, <strong> &#64;{{actualUser}}</strong></h3>
         <button pButton pRipple
           label="Log out"
           class="p-button-outlined mx-5"
           icon="pi pi-sign-out"
-          ></button>
+          (click)="onLogout()"></button>
       </div>
     </div>
 </div>
@@ -26,8 +27,9 @@
             label="Sign up"
             class="p-button-outlined mr-2"
             icon="pi pi-user"
-            routerLink="/auth/new-account"></button>
+            routerlink></button>
         <button pButton pRipple label="Sign in" 
+            (click)="onclick()"
             routerLink="/auth/login"></button>
     </div>
 </ng-template> 

@@ -1,17 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { HeaderService } from '../../../shared/services/header.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styles: ``
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit{
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService,
+      private headerService: HeaderService) {}
 
   private fb = inject( FormBuilder )
   private authService = inject(AuthService)
@@ -41,5 +44,9 @@ export class LoginPageComponent {
           this.show('Error al iniciar sesion','error')
         }
       })
+  }
+
+  ngOnInit(): void {
+    this.headerService.setTitle('Login','pi pi-user')
   }
 }

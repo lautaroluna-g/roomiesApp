@@ -12,21 +12,31 @@ import { BehaviorSubject, tap } from 'rxjs';
 export class HeaderComponent implements OnInit {
 
   public title = '';
+  public icon = " "
   public actualUser = null
   
   private headerService = inject(HeaderService)
+
+  private authService = inject(AuthService)
   
-  constructor() {}
+  onclick():void{
+    console.log('hago click')
+  }
 
   ngOnInit() {
-    this.headerService.title.subscribe(newTitle => {
-      this.title = newTitle;
+    this.headerService.title.subscribe(({title,icon}) => {
+      this.title = title;
+      this.icon = icon
     });
 
     this.headerService.actualUser
     .subscribe( newUser => {
       this.actualUser = newUser?.username
     })
+  }
+
+  public onLogout(){
+    this.authService.logout()
   }
 
   
