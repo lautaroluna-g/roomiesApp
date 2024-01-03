@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   public title = '';
   public icon = " "
-  public actualUser = null
+  public actualUser: any = null
   public isHome:boolean = false
   
   private headerService = inject(HeaderService)
@@ -36,6 +36,9 @@ export class HeaderComponent implements OnInit {
     .subscribe( newUser => {
       this.actualUser = newUser?.username
     })
+
+    this.actualUser = this.authService.currentUser()
+    console.log('user', this.actualUser)
   }
 
   public onLogout(){

@@ -4,7 +4,7 @@ import { User } from '../interfaces/user.interface';
 import { environments } from '../../environments/envionments';
 import { AuthStatus } from '../interfaces/auth-status.interface';
 import { CheckTokenResponse, LoginResponse, RegisterResponse } from '../interfaces';
-import {  map, Observable, catchError, throwError, of } from 'rxjs';
+import {  map, Observable, catchError, throwError, of, tap } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderService } from '../../shared/services/header.service';
 
@@ -13,7 +13,7 @@ export class AuthService {
 
   private readonly baseUrl: string = environments.baseURL
   private httpClient = inject(HttpClient)
-  private cookieService = inject(CookieService)
+  // private cookieService = inject(CookieService)
   private headerService = inject(HeaderService)
 
   private _currentUser = signal<User|null>(null)
@@ -21,7 +21,10 @@ export class AuthService {
 
 
   // Para que lo puedan ver desde afuera pero no modificarlo
-  public currentUser = computed ( () => this._currentUser())
+  public currentUser = computed ( () => {
+      console.log('DEL SERVICIO',this._currentUser()) 
+      this._currentUser()
+    })
   public authStatus = computed( () => this._authStatus())
 
   constructor() {
@@ -33,7 +36,8 @@ export class AuthService {
     this._currentUser.set(user)
     this._authStatus.set(AuthStatus.authenticated)
     this.headerService.setUser(user)
-    this.cookieService.set('token',token, { secure:true})
+    // this.cookieService.set('token',token, { secure:true})
+    localStorage.setItem('token', token)
     return true
   }
 
@@ -70,19 +74,25 @@ export class AuthService {
 
   checkAuthStatus(): Observable<boolean> {
     const url = `${this.baseUrl}/auth/check-token`
-    const token = this.cookieService.get('token')
-
-    if (!token) {
+    // const token = this.cookieService.get('token')
+    const _token = localStorage.getItem('token')
+    
+    // console.log('TOKEN ', token);
+    
+    if (!_token) {
       this.logout()
       return of(false)
     }
+
     const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${ token }`)
+      .set('Authorization', `Bearer ${ _token }`)
+      .set('Content-Type', 'application/json')
 
     return this.httpClient.get<CheckTokenResponse>(url,{ headers })
       .pipe(
-        map( ({user,token}) => this.setAuthentication(user,token)),
-        catchError( () => {
+        map( ({user,token}) => this.setAuthentication(user,_token)),
+        catchError( (err) => {
+          console.log(err)
           this._authStatus.set(AuthStatus.notAuthenticated)
           return of(false)
         })
@@ -90,9 +100,10 @@ export class AuthService {
   }
 
   logout(){
-    this.cookieService.deleteAll()
+    // this.cookieService.deleteAll()
+    localStorage.removeItem('token')
     this._currentUser.set(null)
-    this.headerService.setUser(null)
+    // this.headerService.setUser(null)
     this._authStatus.set(AuthStatus.notAuthenticated)
   }
 
