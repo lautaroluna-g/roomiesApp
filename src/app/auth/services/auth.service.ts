@@ -4,7 +4,7 @@ import { User } from '../interfaces/user.interface';
 import { environments } from '../../environments/envionments';
 import { AuthStatus } from '../interfaces/auth-status.interface';
 import { CheckTokenResponse, LoginResponse, RegisterResponse } from '../interfaces';
-import {  map, Observable, catchError, throwError, of } from 'rxjs';
+import {  map, Observable, catchError, throwError, of , tap} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { HeaderService } from '../../shared/services/header.service';
 
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   private setAuthentication(user:User, token:string): boolean {
-
+    console.log('USUARIO', user)
     this._currentUser.set(user)
     this._authStatus.set(AuthStatus.authenticated)
     this.headerService.setUser(user)
@@ -61,6 +61,7 @@ export class AuthService {
   private request(url:string, body:any): Observable<boolean>{
     return this.httpClient.post<RegisterResponse>(url,body)
     .pipe(
+      // tap(({user,token}) => {console.log('USUARIO DESDE TAP ', user)}),
       map( ({user,token}) => this.setAuthentication(user,token)),
       catchError( (err) => {
         return throwError(() => err)
@@ -81,6 +82,7 @@ export class AuthService {
 
     return this.httpClient.get<CheckTokenResponse>(url,{ headers })
       .pipe(
+        tap(({user,token}) => {console.log('USUARIO DESDE CHECKAUTH ', user)}),
         map( ({user,token}) => this.setAuthentication(user,token)),
         catchError( () => {
           this._authStatus.set(AuthStatus.notAuthenticated)

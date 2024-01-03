@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { RouterModule } from '@angular/router';
+import { User } from '../../../auth/interfaces';
 
 @Component({
   selector: 'app-header',
@@ -12,17 +13,13 @@ export class HeaderComponent implements OnInit {
 
   public title = '';
   public icon = " "
-  public actualUser = null
+  public actualUser: string|undefined
   public isHome:boolean = false
   
   private headerService = inject(HeaderService)
   private cdr= inject(ChangeDetectorRef)
 
   private authService = inject(AuthService)
-  
-  onclick():void{
-    console.log('hago click')
-  }
 
   ngOnInit() {
     this.headerService.title.subscribe(({title,icon}) => {
@@ -32,10 +29,17 @@ export class HeaderComponent implements OnInit {
       this.cdr.detectChanges()
     });
 
+    this.actualUser = this.authService.currentUser()?.username
+
     this.headerService.actualUser
     .subscribe( newUser => {
       this.actualUser = newUser?.username
     })
+
+    console.log(this.actualUser);
+    
+
+
   }
 
   public onLogout(){

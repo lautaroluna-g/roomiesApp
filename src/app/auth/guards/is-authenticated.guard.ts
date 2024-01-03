@@ -12,8 +12,9 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
   const url= state.url
   cookieService.delete('url')
   cookieService.set('url', url)
-
-  if (authService.authStatus() === AuthStatus.authenticated){
+  console.log(authService.authStatus()  )
+  console.log(authService.currentUser()  )
+  if (authService.authStatus() === AuthStatus.authenticated && authService.currentUser()){
     return true
   }
 

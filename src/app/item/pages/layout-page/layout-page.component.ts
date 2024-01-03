@@ -15,8 +15,6 @@ export class LayoutPageComponent{
   private router = inject(Router)
   private cookieService = inject(CookieService)
 
-  public actualUser = this.authService.currentUser()?.username
-
   public authStatusChangedEffect = effect( ()=> {
 
     switch( this.authService.authStatus()){
