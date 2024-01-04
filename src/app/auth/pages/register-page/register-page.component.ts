@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { HeaderService } from '../../../shared/services/header.service';
 import { Router } from '@angular/router';
+import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
   selector: 'app-register-page',
@@ -13,8 +14,10 @@ import { Router } from '@angular/router';
 export class RegisterPageComponent implements OnInit {
   
 
-  constructor(private messageService: MessageService,
-    private headerService: HeaderService) {}
+  constructor(
+    private messageService: MessageService,
+    private headerService: HeaderService,
+    private validatorsService:ValidatorsService) {}
 
   private fb = inject( FormBuilder )
   private router= inject(Router)
@@ -22,10 +25,15 @@ export class RegisterPageComponent implements OnInit {
   private authService = inject(AuthService)
 
   public registerForm: FormGroup = this.fb.group({
-    email:    ['',[Validators.required, Validators.email]],
-    name:     ['',[Validators.required,Validators.minLength(3)]],
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    email:    ['',[Validators.required, Validators.pattern(this.validatorsService.emailPattern)]],
+    name:     ['',[Validators.required,Validators.minLength(3), Validators.pattern(this.validatorsService.firstNameAndLastnamePattern)]],
+    username: ['', [Validators.required,Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    password2: ['', [Validators.required]]
+  }, {
+    Validators: [
+      this.validatorsService.isFieldOneEqualFieldTwo('password', 'password2')
+    ]
   })
 
   show(msg: string, severity:'success'|'info'|'error'): void {
@@ -33,9 +41,16 @@ export class RegisterPageComponent implements OnInit {
       { severity: severity, 
         summary: 'Register',
       detail: msg });
-}
+  }
+
+  public isValidField(field:string){
+    return this.validatorsService.isValidField(this.registerForm, field)
+  }
 
   register(){
+
+    this.registerForm.markAllAsTouched()
+  
     const {username, password, email, name} = this.registerForm.value
 
     this.authService.register(username,password, email, name)
