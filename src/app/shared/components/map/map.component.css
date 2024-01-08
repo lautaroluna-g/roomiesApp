@@ -1,0 +1,10 @@
+.map-wrap {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 77px); 
+}
+
+.map {
+  aspect-ratio: 16/9;
+  width: 100%;
+}

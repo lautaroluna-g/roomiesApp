@@ -7,6 +7,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { MapComponent } from './components/map/map.component';
 
 
 
@@ -15,7 +16,8 @@ import { AboutPageComponent } from './pages/about-page/about-page.component';
     Error404PageComponent,
     HomePageComponent,
     HeaderComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,
