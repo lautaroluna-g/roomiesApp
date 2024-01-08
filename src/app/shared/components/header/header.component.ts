@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   public title = '';
   public icon = " "
   public actualUser: string|undefined
+
   public isHome:boolean = false
   
   private headerService = inject(HeaderService)
@@ -37,10 +38,7 @@ export class HeaderComponent implements OnInit {
     })
 
     console.log(this.actualUser);
-    
 
-
-  }
 
   public onLogout(){
     this.authService.logout()
