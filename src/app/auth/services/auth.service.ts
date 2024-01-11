@@ -21,10 +21,7 @@ export class AuthService {
 
 
   // Para que lo puedan ver desde afuera pero no modificarlo
-  public currentUser = computed ( () => {
-      console.log('DEL SERVICIO',this._currentUser()) 
-      this._currentUser()
-    })
+  public currentUser = computed ( () => this._currentUser())
   public authStatus = computed( () => this._authStatus())
 
   constructor() {
